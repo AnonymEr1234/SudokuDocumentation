@@ -1,0 +1,15 @@
+# Ignore everything by default
+*
+
+# Allow .tex and .bib files
+!*.tex
+!*.bib
+!*.md
+!*.gitignore
+
+# Allow directories (so .tex and .bib files in subdirectories are tracked)
+!*/
+
+# Optional: Ignore specific files or folders
+.DS_Store
+Thumbs.db
