@@ -14,8 +14,8 @@
 \usepackage{listings}
 
 % Document settings
-\title{Sudoku Research Project Documentation}
-\author{Research Team}
+\title{Sudoku Forschungsprojekt Dokumentation}
+\author{Bastian Fischer, Samuel Jaschke, Hannes Träger, Paul Volk}
 \date{\today}
 
 \begin{document}
@@ -23,33 +23,22 @@
 \maketitle
 
 \begin{abstract}
-This document presents our research on Sudoku puzzles, focusing on algorithmic approaches to generation and solving. We investigate complexity metrics and propose efficient methods for puzzle creation and solution. This work contributes to computational puzzle theory and constraint satisfaction problems.
 \end{abstract}
 
-\section{Introduction}
-\subsection{Background}
-Sudoku is a logic-based number placement puzzle. The objective is to fill a 9×9 grid with digits so that each column, each row, and each of the nine 3×3 subgrids contains all digits from 1 to 9.
+\section{Einführung}
+\subsection{Hintergrund}
 
-\subsection{Research Objectives}
-The main objectives of this research project are:
+\subsection{Forschungsziele}
+Es werden folgende Forschungsziele behandelt:
 \begin{itemize}
-    \item Develop efficient algorithms for generating Sudoku puzzles with unique solutions
-    \item Analyze computational complexity of different solving techniques
-    \item Propose metrics for puzzle difficulty classification
+    \item  
 \end{itemize}
 
-\section{Literature Review}
-\subsection{Previous Work}
-Key contributions in the field include constraint satisfaction approaches, backtracking algorithms, and difficulty metrics based on human solving strategies.
-\section{Methodology}
-\subsection{Problem Formulation}
-We formalize the Sudoku puzzle as a constraint satisfaction problem with the following rules:
-\begin{itemize}
-    \item Each cell must contain exactly one digit from 1-9
-    \item Each row must contain all digits from 1-9
-    \item Each column must contain all digits from 1-9
-    \item Each 3×3 subgrid must contain all digits from 1-9
-\end{itemize}
+\section{Bisherige Literatur}
+Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösungen \cite{DBLP:journals/corr/abs-1201-0749} somit muss ein Sudoku, damit es eine eindeutige Lösung hat mindestens 17 Hinweise haben.
+\section{Methodik}
+
+\subsection{Problem Formulierung}
 
 \subsection{Symmetrien}
 Ein Sudoku besteht aus 3 horizontalen und 3 vertikalen Bändern. Die Bänder bestehen jeweils aus 3 Zeilen beziehungsweise 3 Spalten. \\
@@ -64,62 +53,30 @@ Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formul
     \item Spiegelung und Rotation
 \end{itemize}
 
-\subsection{Algorithms}
-\subsubsection{Generation Algorithm}
+\subsection{Algorithmen}
+\subsubsection{Generierungsalgorithmen}
 \begin{algorithm}
-\caption{Sudoku Generation Algorithm}
+\caption{Sudoku generierung}
 \begin{algorithmic}[1]
-\State Generate a complete, valid Sudoku grid
-\State Remove cells systematically while maintaining unique solution
-\State Verify difficulty level meets target parameters
+\State Ein vollständiges, gültiges Sudoku-Gitter generieren
+\State Zellen systematisch entfernen und dabei eine eindeutige Lösung beibehalten
+\State Überprüfen, ob der Schwierigkeitsgrad den Zielparametern entspricht
 \end{algorithmic}
 \end{algorithm}
 
-\subsubsection{Solving Algorithm}
-\begin{algorithm}
-\caption{Sudoku Solving Algorithm}
-\begin{algorithmic}[1]
-\State Apply constraint propagation to simplify puzzle
-\State If puzzle solved, return solution
-\State Select unfilled cell with minimum possibilities
-\State Apply backtracking search with remaining options
-\end{algorithmic}
-\end{algorithm}
+\subsubsection{Lösungsalgorithmen}
 
-\section{Implementation}
-\subsection{Tech Stack}
-\subsection{Frontend}
-\subsection{Backend}
-\subsection{Interface}
+\subsection{Implementierung}
+\subsubsection{Tech Stack}
+\subsubsection{Frontend}
+\subsubsection{Backend}
+\subsubsection{Interface}
 
-\section{Results}
-\subsection{Performance Metrics}
-We evaluate algorithms based on:
-\begin{itemize}
-    \item Computational efficiency (time complexity)
-    \item Solution uniqueness guarantees
-    \item Difficulty distribution generation
-\end{itemize}
+\section{Ergebnisse}
 
-\begin{table}[h]
-\centering
-\caption{Algorithm Performance Comparison}
-\begin{tabular}{lccc}
-\toprule
-Algorithm & Time (ms) & Memory (MB) & Difficulty Range \\
-\midrule
-Algorithm 1 & 120 & 15 & Easy-Medium \\
-Algorithm 2 & 85 & 22 & Medium-Hard \\
-Algorithm 3 & 210 & 18 & All levels \\
-\bottomrule
-\end{tabular}
-\end{table}
+\section{Diskussion}
 
-\section{Discussion}
-Our findings suggest that combining constraint propagation with backtracking provides the most efficient solving mechanism. For generation, we found that symmetric pattern removal with uniqueness testing produces balanced puzzles.
-
-\section{Conclusion}
-This research advances understanding of Sudoku puzzle generation and solution algorithms, with practical applications in puzzle creation and computational complexity analysis.
+\section{Fazit und Ausblick}
 
 \bibliographystyle{plain}
 \bibliography{references}
