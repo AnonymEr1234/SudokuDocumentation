@@ -13,6 +13,7 @@
 \usepackage{listings}
 \usepackage{enumerate}
 \usepackage{pythontex}
+\usepackage{lstmisc}
 
 % Document settings
 \title{Sudoku Forschungsprojekt Dokumentation}
@@ -83,7 +84,7 @@ Belegungen der ersten Spalte und für ein 9x9 Sudoku ergeben sich 150 mögliche 
 TODO in die Überschriften besser einteilen.
 
 Um zu überprüfen, ob bestimmte partielle Sudokus eindeutig lösbar ist, haben wir uns verschieden Lösungsmöglichkeiten überlegt.
-Die zwei Hauptüberlegungen waren einmal ein CSP-Solver (Constraint Satisfaction Problem) oder ein SAT-Solver (Satisfiability).
+Die zwei wichtigsten Überlegungen waren einmal ein CSP-Solver (Constraint Satisfaction Problem) oder ein SAT-Solver (Satisfiability).
 Jeweils Ansätze je aus dem Bereich der künstlichen Intelligenz oder aus der theoretischen Informatik.
 Um herauszufinden, welche dieser Ansätze eine schnellere Lösung bietet haben wir ein python Skript geschrieben welches diesen Sachverhalt untersuchen sollte~\cite{TODO}.
 \begin{enumerate}
@@ -107,7 +108,7 @@ Um herauszufinden, welche dieser Ansätze eine schnellere Lösung bietet haben w
 
 Um die Lösungsansätze miteinander vergleichen zu können, haben wir jeweils 100 4x4, 6x6 und 9x9 sudokus lösen lassen.
 Hierfür haben wir einmal den cadical SAT-Solver~\cite{TODO} verwendet und dann noch die verschieden CSP-Solver von TODO~\cite{TODO}.
-Wir haben hierfür einmal den durchschnitt der Zeiten pro Solver für das reine lösen ausgewertet und die Anzahl der ausgetimeten durchläufe.
+Wir haben hierfür einmal den durchschnitt der Zeiten pro Solver für das reine lösen ausgewertet und die Anzahl der abgelaufenen Durchläufe.
 
 TODO add graphs
 TODO die graphen noch genauer beschreiben
