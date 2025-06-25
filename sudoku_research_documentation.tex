@@ -1,5 +1,4 @@
-
-\documentclass[12pt,a4paper]{article}
+ 60\documentclass[12pt,a4paper]{article}
 
 % Packages
 \usepackage[utf8]{inputenc}
@@ -12,6 +11,9 @@
 \usepackage{algpseudocode}
 \usepackage{booktabs}
 \usepackage{listings}
+\usepackage{enumerate}
+\usepackage{pythontex}
+\usepackage{lstmisc}
 
 % Document settings
 \title{Sudoku Forschungsprojekt Dokumentation}
@@ -35,7 +37,7 @@ Es werden folgende Forschungsziele behandelt:
 \end{itemize}
 
 \section{Bisherige Literatur}
-Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösungen \cite{DBLP:journals/corr/abs-1201-0749} somit muss ein Sudoku, damit es eine eindeutige Lösung hat mindestens 17 Hinweise haben.
+Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösungen~\cite{DBLP:journals/corr/abs-1201-0749} somit muss ein Sudoku, damit es eine eindeutige Lösung hat mindestens 17 Hinweise haben.
 \section{Methodik}
 
 \subsection{Problem Formulierung}
@@ -43,7 +45,7 @@ Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösunge
 \subsection{Symmetrien}
 Ein Sudoku besteht aus 3 horizontalen und 3 vertikalen Bändern. Die Bänder bestehen jeweils aus 3 Zeilen beziehungsweise 3 Spalten. \\
 Die Tupel (1, 2, 3),(4, 5, 6),(7, 8, 9) beschreiben die Zeilen oder Spalten der jeweiligen Bänder. \\
-Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formulieren \cite{russell2006mathematics}: \\
+Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formulieren~\cite{russell2006mathematics}: \\
 \begin{itemize}
     \item Permutation der 9 Ziffern
     \item Permutation der 3 horizontalen Bänder
@@ -53,7 +55,7 @@ Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formul
     \item Spiegelung und Rotation
 \end{itemize}
 Insgesamt gibt es in etwa 6,7 Trilliarden verschiedene valide Sudokus \cite{felgenhauer2006mathematics}. Unter Berücksichtigung der Symmetrien
-gibt es ungefähr 5,5 Milliarden verschiedene valide Sudokus \cite{russell2006mathematics}. \\
+gibt es ungefähr 5,5 Milliarden verschiedene valide Sudokus\cite{russell2006mathematics}. \\
 Diese Symmetrien nutzen wir um die Anzahl an Belegungen des partiellen Sudokus zu reduzieren. Da beliebige Permutationen der 9 Ziffern  erlaubt sind,
 können wir die erste Zeile aufsteigend belegen. Das heißt, dass wir die Ziffern von 1 bis 9 in der ersten Zeile anordnen. \\
 Durch die Permutation der drei horizontalen Bänder und der Permutation der Zeilen innerhalb eines horizontalen Bandes, können wir außerdem bestimmte Regeln für die erste Spalte aufstellen:
@@ -79,8 +81,45 @@ Belegungen der ersten Spalte und für ein 9x9 Sudoku ergeben sich 150 mögliche 
 
 \subsubsection{Lösungsalgorithmen}
 
+TODO in die Überschriften besser einteilen.
+
+Um zu überprüfen, ob bestimmte partielle Sudokus eindeutig lösbar ist, haben wir uns verschieden Lösungsmöglichkeiten überlegt.
+Die zwei wichtigsten Überlegungen waren einmal ein CSP-Solver (Constraint Satisfaction Problem) oder ein SAT-Solver (Satisfiability).
+Jeweils Ansätze je aus dem Bereich der künstlichen Intelligenz oder aus der theoretischen Informatik.
+Um herauszufinden, welche dieser Ansätze eine schnellere Lösung bietet haben wir ein python Skript geschrieben welches diesen Sachverhalt untersuchen sollte~\cite{TODO}.
+\begin{enumerate}
+    \item CSP-Solver \\
+    Um das Problem eines Sudokus in ein CSP zu übertragen haben wir schlicht die Domänen der Zellen auf die Werte $1, \dots, 9$ gesetzt und die Sudoku Regeln jeweils in Constraints übersetzt und anschließend die Domänen der schon vorgegebenen Zellen nur auf die eingegebenen Zahlen eingeschränkt.
+    Die Constraints waren also für jede Zelle $z_{i, k}$ einer Reihe, dass $z_{i, k} \neq z_{j, k}$ mit $j \neq i$.
+    Das Gleiche gilt für die Spalten, also $z_{i, k} \neq z_{i, l}$ mit $k \neq l$.
+    Für die Unterquadrate wurden jeweils die auch wieder geschaut, dass jede Zelle nicht den gleichen Wert haben darf wie eine andere im Unterquadrat.
+    \item SAT-Solver \\
+    Da der Sat-Solver nur für Variablen mit den Werten wahr oder falsch arbeiten kann.
+    Dafür wurde zuerst jeder Zelle mit jeden Wert eine bestimmte Variable zugewiesen.
+    \begin{verbatim}
+        varnum(r, c, d) = size * size * (r - 1) + size * (c - 1) + d
+    \end{verbatim}
+    TODO Mathematisches Aufschreiben
+    Ein SAT-Solver nimmt Clauses in konjunktiver Normalform entgegen.
+    Man musste also für jede Zelle bestimmen, dass mindestens eine Variable wahr ist.
+    Außerdem darf maximal eine Variable für jeden einzelnen Wert pro Zelle wahr sein.
+    Das musste auch für jede Spalte, jede Reihe und jedes Unterquadrat festgelegt werden.
+    Um die Hinweise hinzuzufügen, nimmt man also nun an, dass bestimmt Variablen wahr sind und löst dann mit dieser Annahme das SAT-Problem.
+\end{enumerate}
+
+Um die Lösungsansätze miteinander vergleichen zu können, haben wir jeweils 100 4x4, 6x6 und 9x9 sudokus lösen lassen.
+Hierfür haben wir einmal den cadical SAT-Solver~\cite{TODO} verwendet und dann noch die verschieden CSP-Solver von TODO~\cite{TODO}.
+Wir haben hierfür einmal den durchschnitt der Zeiten pro Solver für das reine lösen ausgewertet und die Anzahl der abgelaufenen Durchläufe.
+
+TODO add graphs
+TODO die graphen noch genauer beschreiben
+
+Wie man unschwer erkennen kann, ist der SAT-Solver mit Abstand am schnellsten und löst die Sudokus innerhalb von meist nicht messbarer Zeit.
+Auch wenn sich manche CSP-Lösungsverfahren gut gehalten haben, macht es keinen Sinn etwas anderes als den getesteten SAT-Solver zu verwenden.
+Wir können mit ähnlicher Performanz rechnen, da auch cadical-rs so wie die Implementierung in Python auf dem gleichen Code in C/C++ laufen.
+
 \subsection{Implementierung}
-\subsubsection{Tech Stack}
+\subsubsection{Tech-Stack}
 \subsubsection{Frontend}
 \subsubsection{Backend}
 \subsubsection{Interface}
