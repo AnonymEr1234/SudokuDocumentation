@@ -1,6 +1,6 @@
 \subsection{Unterquadrate}
 
-\begin{figure}[ht]
+\begin{figure}[H]
     \centering
     \begin{minipage}{0.48\textwidth}
         \begin{tikzpicture}
@@ -102,3 +102,15 @@
     \caption{Gemeinsame Beschriftung für beide Sudoku-Gitter}
     \label{fig:gemeinsames_sudoku}
 \end{figure}
+
+Innerhalb von vollständig ausgefüllten Sudokus kann es Unterquadrate geben.
+Ein Beispiel für ein solches Unterquadrat ist in \cref{fig:gemeinsames_sudoku} gegeben.
+Ein Unterquadrat besteht aus vier Zellen in denen zwei Ziffern jeweils doppelt vorkommen.
+Je zwei Zellen sind dabei in der gleichen Spalte beziehungsweise in der gleichen Zeile.
+Entweder beide Zeilen oder beide Spalten sind im gleichen Band.
+Durch die Anordnung der Zellen ist es möglich, ein weiteres gültiges Sudoku zu generieren, nur durch Permutieren der beiden Ziffern im Unterquadrat.
+Das heißt, um ein eindeutig lösbares partielles Sudoku aus diesem voll ausgefüllten Sudoku zu erhalten,
+muss mindestens eine der Zellen des Unterquadrats Teil des partiellen Sudokus sein.
+Einige vollständige Sudokus haben sehr viele Unterquadrate und sind dementsprechend weniger gut geeignet,
+um daraus ein partielles Sudoku zu generieren.
+Um unsere Liste an vollständigen Sudokus für die Suche zu verbessern, generieren wir nur Sudokus, die keine Unterquadrate enthalten.
