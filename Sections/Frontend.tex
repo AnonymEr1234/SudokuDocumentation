@@ -1,0 +1,37 @@
+\subsubsection{Frontend}
+Das Frontend ist eine Webanwendung, die vollständig im Browser lauffähig ist.
+Diese bietet zwei grundlegende Betriebsmodi für die Erstellung von Sudokus an.
+Einmal den Markiermodus, in dem Felder visuell hervorgehoben werden können,
+und den Eingabemodus, der eine manuelle Eingabe von Zahlen erlaubt.
+Die Anwendung unterstützt dabei Sudoku-Größen von 4x4, 6x6 und 9x9.
+\\
+Die HTML-Datei enthält die grundlegenden Interface-Komponenten der Anwendung. Hierzu gehören:
+\begin{itemize}
+    \item Schaltflächen zur Auswahl der Sudoku-Größe (4x4, 6x6, 9x9), mit denen dynamisch ein passendes Raster erzeugt wird.
+    \item Umschalter zwischen Markier- und Eingabemodus, die das Verhalten der Zellen beim Anklicken verändern.
+    \item Das Grid welches beim anklicken verändert werden kann und wo dann bestimmte Muster oder Formen markiert werden können.
+    \item Ein Download-Button, der es ermöglicht, das Sudoku als PDF-Datei zu exportieren.
+\end{itemize}
+
+Je nach gewählter Sudoku-Größe wird ein entsprechendes Raster dynamisch erzeugt.
+Die Zellen erhalten je nach Modus unterschiedliche Eventlistener:
+im Markiermodus lassen sie sich an- und abwählen, im Eingabemodus können Zahlen eingegeben werden.
+Die Anwendung erlaubt es, zwischen einem Markier- und einem Eingabemodus zu wechseln.
+Der aktuelle Modus wird zentral verwaltet, sodass alle Eingabefunktionen sowie Prüfmechanismen entsprechend angepasst sind.
+Nach jeder Benutzereingabe wird automatisch überprüft, ob das aktuelle Sudoku gültig ist.
+Im Eingabemodus wird dabei auf doppelte Zahlen in Zeilen, Spalten und Blöcken geachtet.
+Im Markiermodus wird geprüft, ob genügend Felder markiert sind und ob die Verteilung über das Sudoku-Feld ausreichend ist (mindestens zwei Zeilen und Spalten pro Block müssen belegt sein).
+Fehlerhafte Zellen werden visuell hervorgehoben. Die Benutzereingaben werden in ein JSON-Objekt umgewandelt und an eine serverseitige API übermittelt.
+Diese verarbeitet das unvollständige Sudoku, berechnet eine mögliche Lösung und sendet sie zurück an den Client.
+Die Lösung wird anschließend im dafür vorgesehenen Bereich angezeigt.
+\\
+Ein besonderes Augenmerk lag bei der Umsetzung auf der Validierung der Sudoku-Regeln.
+Dabei musste berücksichtigt werden, dass bei Sudokus der Größen 4x4 und 6x6 die Blockgrößen variieren (2x2 bzw. 2x3).
+Die Logik erkennt automatisch die korrekten Blockdimensionen und wendet die Regeln entsprechend an.
+Zudem wurde eine eigene Fehlercodierung entwickelt,
+um unterschiedliche Arten von Regelverstößen klar voneinander unterscheiden und gezielt anzeigen zu können.
+Dazu gehören doppelte Werte, fehlende Verteilung sowie unvollständige Eingaben.
+\\
+Eine der größten Herausforderungen war die dynamische Erstellung und Validierung unterschiedlich großer Sudoku-Raster sowie die Anpassung der Prüf- und Eingabelogik an zwei Betriebsmodi.
+Ebenso anspruchsvoll war die Entwicklung einer robusten Fehlererkennung,
+die bei teilweise ausgefüllten Rätseln dennoch konsistente Rückmeldungen geben kann.
