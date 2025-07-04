@@ -1,0 +1,31 @@
+\subsection{Kommunikation per POST-Anfrage}
+
+Die Kommunikation zwischen Frontend und Backend erfolgt über POST-Anfragen. Das Frontend sendet dabei Daten im JSON-Format an einen definierten API-Endpunkt des Backends.
+
+\subsection{Frontend-Seite}
+
+Das Frontend erstellt ein JSON-Objekt mit den benötigten Daten und schickt es per POST an das Backend. Beispiel mit JavaScript:
+
+\begin{verbatim}
+fetch('/api/endpoint', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ key: 'value' })
+})
+.then(response => response.json())
+.then(data => {
+  // Daten verarbeiten und UI aktualisieren
+});
+\end{verbatim}
+
+\subsection{Backend-Seite}
+
+Das Backend empfängt die POST-Anfrage, liest die JSON-Daten aus, verarbeitet sie (z.B. Validierung, Datenbankzugriff) und sendet eine JSON-Antwort zurück.
+
+\subsection{Antwort}
+
+Die Antwort enthält den Status der Verarbeitung und ggf. weitere Daten im JSON-Format. Das Frontend wertet diese aus und reagiert entsprechend (z.B. Anzeige von Erfolg oder Fehler).
+
+\subsection{Zusammenfassung}
+
+Die Kommunikation basiert auf dem Senden und Empfangen von JSON-Daten per POST-Anfrage. Das Frontend baut die Anfrage, das Backend verarbeitet sie und antwortet mit JSON. So findet der Datenaustausch konkret statt.
