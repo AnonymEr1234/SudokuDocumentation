@@ -1,0 +1,78 @@
+Um die partiellen Sudokus zu erstellen, auf Eindeutigkeit zu überprüfen und die Schwierigkeit zu bewerten,
+werden immer wieder folgende Schritte durchlaufen:
+\begin{enumerate}
+    \item \label{step:fill} Markierte Felder mit Ziffern füllen
+    \item \label{step:unique} Partielles Sudoku auf Eindeutigkeit überprüfen
+    \item \label{step:permute} Permutation der Ziffern im partiellen Sudoku
+    \item \label{step:difficulty} Bewertung des Schwierigkeitsgrads des partiellen Sudokus
+\end{enumerate}
+Für den Modus, wo nur Zahlen gegeben sind, werden die Schritte~\ref{step:fill} und~\ref{step:permute} weggelassen.
+Für die Modi, wo Felder markiert werden, auf wenn einzelne Ziffern gesetzt werden, werden alle Schritte durchlaufen.
+Die genaue Ausführung der Schritte unterscheidet sich lediglich in Schritt~\ref{step:permute}.
+Wenn Schritt~\ref{step:unique} fehlschlägt, das heißt das Sudoku entweder nicht lösbar ist oder mehrere Lösungen hat,
+wird Schritt~\ref{step:fill} wiederholt, bis ein valides partielles Sudoku gefunden wurde.
+
+\subsection{Markierte Felder befüllen}
+Für die Befüllung der markierten Felder haben wir verschiedene Ansätze ausprobiert.
+
+\subsubsection{Backtracking}
+Der erste Ansatz war ein Backtracking-Algorithmus, der rekursiv versucht, die markierten Felder mit Ziffern zu füllen.
+Wenn wir eine Belegung gefunden haben, die allerdings nicht lösbar oder mehrdeutig war, haben wir den Algorithmus weiterlaufen lassen,
+bis eine eindeutige Lösung gefunden wurde, oder eine maximale Anzahl an Versuchen erreicht wurde.
+Das Problem bei diesem Ansatz war, dass wir dadurch nur sehr ähnliche partielle Sudokus erhalten haben,
+die wir überprüft haben.
+
+\subsubsection{Zufälliges Backtracking}
+\begin{algorithm}
+    \caption{zufälliges Backtracking}
+    \label{alg:radom_backtracking}
+    \begin{algorithmic}[1]
+        \Require $G$ ist ein leeres oder teilweise ausgefülltes $9 \times 9$ Sudoku-Gitter
+        \Require $M$ ist die Menge der zu füllenden markierten Felder $i$
+        \Ensure Alle Felder in $M$ sind mit gültigen Ziffern gefüllt, sodass Sudoku-Regeln erfüllt sind.
+        \Function{FülleMarkierteFelder}{$G, M$}
+            \If{$M$ ist leer}
+                \If{$G$ ist eindeutig lösbar}
+                    \State \Return \textbf{true} \Comment{Sudoku ist vollständig und eindeutig lösbar}
+                \Else
+                    \State \Return \textbf{false} \Comment{Sudoku ist nicht eindeutig lösbar}
+                \EndIf
+            \EndIf
+            \State Wähle zufällig ein Feld $i$ aus $M$
+            \State $M \gets M \setminus \{i\}$
+            \State $Z \gets$ zufällige Permutation von $\{1,2,\dots,9\}$
+            \For{$z \in Z$}
+                \If{$(G, i, z)$ erfüllt die Sudoku-Regeln}
+                    \State $G[i] \gets z$
+                    \If{\Call{FülleMarkierteFelder}{$G, M$}}
+                        \State \Return \textbf{true}
+                    \EndIf
+                    \State $G[i][j] \gets 0$ \Comment{Backtrack}
+                \EndIf
+            \EndFor
+            \State $M \gets M \cup \{(i,j)\}$ \Comment{Rückgängig machen}
+            \State \Return \textbf{false}
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+Vom zufälligen Backtracking haben wir uns weniger Abhängigkeit der einzelnen partiellen Sudokus erhofft.
+Die Grundidee lässt sich Diagramm ~\ref{alg:radom_backtracking} entnehmen.
+Was in dem Algorithmus nicht zu sehen ist, ist das wir nach 3 Tests auf Eindeutigkeit komplett neu gestartet haben.
+So gab es keine große Abhängigkeit zwischen den überprüften partiellen Sudokus.
+Das Problem bei diesem Ansatz und auch bei normalen Backtracking war,
+dass fast alle partiellen Sudokus die wir überprüft haben, gar nicht lösbar waren.
+Die Hinweise untereinander entsprachen zwar den Sudoku-Regeln, es war aber nicht möglich alle anderen Zellen korrekt mit Ziffern zu füllen.
+
+\subsubsection{Grid auf Lösungen anwenden}
+Als letzten Ansatz haben wir voll ausgefüllte Sudokus genommen und diese auf die markierten Felder angewendet.
+Das heißt, an jeder markierten Zelle haben wir die Ziffer des voll ausgefüllten Sudokus dieser Zelle eingetragen.
+Da wir die markierten Sudokus als Liste mit 81 Nullen und Einsen gespeichert haben,
+ging dies durch zellenweise Multiplikation mit dem voll ausgefüllten Sudoku.
+Dieser Ansatz hat sich als sehr effektiv herausgestellt, da so jedes partielle Sudoku mindestens eine Lösung hat.
+Wir haben eine Datei mit 160.000 voll ausgefüllten Sudokus generiert, welche alle keine Unterquadrate enthalten.
+Wie bereits in \cref{sec:unterquadrate} erwähnt ist es schwieriger eindeutige Lösungen zu finden, wenn Unterquadrate vorhanden sind.
+Dafür haben wir das Programm von~\cite{stunmuffin_sudoku_generator_2025} modifiziert, dass nur vollständige Lösungen generiert werden
+und diese danach auf Unterquadrate überprüft werden.
+
+%TODO: Hier noch Pseudocode für die Anzahl Unterquadrate einfügen
