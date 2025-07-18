@@ -45,50 +45,23 @@ Es werden folgende Forschungsziele behandelt:
 
 \section{Bisherige Literatur}
 Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösungen~\cite{DBLP:journals/corr/abs-1201-0749} somit muss ein Sudoku, damit es eine eindeutige Lösung hat mindestens 17 Hinweise haben.
-\section{Methodik}
+
+\section{theoretische Überlegungen}
 
 \subsection{Problem Formulierung}
 
-\subsection{Symmetrien}
-Ein Sudoku besteht aus 3 horizontalen und 3 vertikalen Bändern. Die Bänder bestehen jeweils aus 3 Zeilen beziehungsweise 3 Spalten. \\
-Die Tupel (1, 2, 3),(4, 5, 6),(7, 8, 9) beschreiben die Zeilen oder Spalten der jeweiligen Bänder. \\
-Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formulieren~\cite{russell2006mathematics}: \\
-\begin{itemize}
-    \item Permutation der 9 Ziffern
-    \item Permutation der 3 horizontalen Bänder
-    \item Permutation der 3 vertikalen Bänder
-    \item Permutation der Zeilen innerhalb eines horizontalen Bandes
-    \item Permutation der Spalten innerhalb eines vertikalen Bandes
-    \item Spiegelung und Rotation
-\end{itemize}
-Insgesamt gibt es in etwa 6,7 Trilliarden verschiedene valide Sudokus \cite{felgenhauer2006mathematics}. Unter Berücksichtigung der Symmetrien
-gibt es ungefähr 5,5 Milliarden verschiedene valide Sudokus\cite{russell2006mathematics}. \\
-Diese Symmetrien nutzen wir um die Anzahl an Belegungen des partiellen Sudokus zu reduzieren. Da beliebige Permutationen der 9 Ziffern  erlaubt sind,
-können wir die erste Zeile aufsteigend belegen. Das heißt, dass wir die Ziffern von 1 bis 9 in der ersten Zeile anordnen. \\
-Durch die Permutation der drei horizontalen Bänder und der Permutation der Zeilen innerhalb eines horizontalen Bandes, können wir außerdem bestimmte Regeln für die erste Spalte aufstellen:
-\begin{itemize}
-    \item $1< 2< 3 \text{ und } 4<5<6 \text{ und } 7<8<9$
-    \item $4 < 7$
-    \item Der erste Eintrag hat den Wert 1 (wegen der Belegung der ersten Zeile)
-    \item Die Werte vom 2. und 3. Eintrag sind jeweils größer als 3 (wegen der Regel für die Blöcke und der Belegung der ersten Zeile).
-\end{itemize}
-Mit diesen Einschränkungen ergeben sich für ein 4x4 Sudoku 2 mögliche Belegungen der ersten Spalte. Für ein 6x6 Sudoku ergeben sich 9 mögliche
-Belegungen der ersten Spalte und für ein 9x9 Sudoku ergeben sich 150 mögliche Belegungen der ersten Spalte. \\
+\input{Sections/Symmetrien}
 
 \input{Sections/Unterquadrate}
 
+\section{Erzeugung der partiellen Sudokus}
+
+\input{Sections/Erzeugung Lösung}
 
 
 \subsection{Algorithmen}
 \subsubsection{Generierungsalgorithmen}
-\begin{algorithm}
-\caption{Sudoku Generierung}
-\begin{algorithmic}[1]
-\State Ein vollständiges, gültiges Sudoku-Gitter generieren
-\State Zellen systematisch entfernen und dabei eine eindeutige Lösung beibehalten
-\State Überprüfen, ob der Schwierigkeitsgrad den Zielparametern entspricht
-\end{algorithmic}
-\end{algorithm}
+
 
 \subsubsection{Lösungsalgorithmen}
 

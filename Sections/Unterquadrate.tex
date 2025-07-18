@@ -1,4 +1,5 @@
 \subsection{Unterquadrate}
+\label{sec:unterquadrate}
 
 \begin{figure}[H]
     \centering
@@ -109,8 +110,5 @@ Ein Unterquadrat besteht aus vier Zellen in denen zwei Ziffern jeweils doppelt v
 Je zwei Zellen sind dabei in der gleichen Spalte beziehungsweise in der gleichen Zeile.
 Entweder beide Zeilen oder beide Spalten sind im gleichen Band.
 Durch die Anordnung der Zellen ist es möglich, ein weiteres gültiges Sudoku zu generieren, nur durch Permutieren der beiden Ziffern im Unterquadrat.
-Das heißt, um ein eindeutig lösbares partielles Sudoku aus diesem voll ausgefüllten Sudoku zu erhalten,
-muss mindestens eine der Zellen des Unterquadrats Teil des partiellen Sudokus sein.
-Einige vollständige Sudokus haben sehr viele Unterquadrate und sind dementsprechend weniger gut geeignet,
-um daraus ein partielles Sudoku zu generieren.
-Um unsere Liste an vollständigen Sudokus für die Suche zu verbessern, generieren wir nur Sudokus, die keine Unterquadrate enthalten.
+Das bedeutet, dass ein partielles Sudoku, welches ein vollständiges Sudoku mit Unterquadrat als Lösung hat, nicht eindeutig lösbar ist,
+wenn in keinem der Zellen der Unterquadrats eine Ziffer vorgegeben ist.
