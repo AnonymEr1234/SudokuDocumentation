@@ -76,3 +76,16 @@ Dafür haben wir das Programm von~\cite{stunmuffin_sudoku_generator_2025} modifi
 und diese danach auf Unterquadrate überprüft werden.
 
 %TODO: Hier noch Pseudocode für die Anzahl Unterquadrate einfügen
+
+\subsection{Überprüfung auf eindeutige Lösung}
+
+\subsection{Permutation der Zahlen}
+Da alle Lösungsdateien in der ersten Zeile 1 bis 9 geordnet stehen haben, müssen wir die Ziffern in den partiellen Sudokus permutieren.
+Beim normalen Markierungsmodus wird die Permutation der Ziffern zufällig gewählt.
+Beim Markierungsmodus mit Eingabe von wenigen Ziffern wird die Permutation so gewählt, dass an den markierten Zellen mit Ziffern,
+dort auch diese Ziffern stehen.
+Dies ist nicht immer möglich bei allen partiellen Sudokus.
+Wenn es nicht möglich ist, muss man wieder bei Schritt~\ref{step:fill} anfangen und ein neues partielles Sudoku generieren.
+
+
+\subsection{Schwierigkeit bewerten}
