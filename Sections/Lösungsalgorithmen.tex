@@ -35,7 +35,7 @@ Und zweitens muss man Sudoku auf SAT reduzieren.
     \end{equation}
     und, dass jede Zelle maximal eine Zahl enthält, wiederum mit dieser Menge an Klauseln.
     \begin{equation}
-        \forall i, j, k_1, k_2: \neg V(i, j, k_1) \vee \neg V(i, j, k_2) \text{ mit }i, j, k_1, k_2 \in \{1, ..., 9\} \text{ und } k_1 \neq k_2 %TODO auf generelle größe anpassen?
+        \forall i, j, k_1, k_2: \neg V(i, j, k_1) \vee \neg V(i, j, k_2) \text{ mit }i, j, k_1, k_2 \in \{1, ..., n\} \text{ und } k_1 \neq k_2 %TODO auf generelle größe anpassen?
     \end{equation}
     Des weiteren musste nun für jede Reihe, jede Spalte und jedes Untergitter bestimmt werden, dass zwei Zellen nicht den gleichen Wert und alle Werte $1, \dots, n$ %TODO auf generelle größe anpassen?
     in der Zeile, Spalte oder dem Untergitter enthalten sein müssen.
