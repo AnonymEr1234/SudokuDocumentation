@@ -43,14 +43,21 @@ Es werden folgende Forschungsziele behandelt:
     \item  
 \end{itemize}
 
-\section{Bisherige Literatur}
-Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösungen~\cite{DBLP:journals/corr/abs-1201-0749} somit muss ein Sudoku, damit es eine eindeutige Lösung hat mindestens 17 Hinweise haben.
-
-\section{theoretische Überlegungen}
+\section{Theoretische Überlegungen}
 
 \subsection{Problem Formulierung}
 
+\subsection{Minimale Anzahl Hinweise}
+Die minimale Anzahl für ein eindeutig lösbares $9 \times 9$ Sudoku sind 17 Hinweise~\cite{DBLP:journals/corr/abs-1201-0749}.
+Für $4 \times 4$ und $6 \times 6$ Sudokus haben wir alles Anordnungen an Hinweisen selbst getestet.
+Für $4 \times 4$ Sudokus sind es 4 Hinweise und für $6 \times 6$ Sudokus sind es %TODO
+Hinweise.
+%TODO jeweils ein Sudoku einfügen
+
+
 \input{Sections/Symmetrien}
+
+\input{Sections/RowConstraints}
 
 \input{Sections/Unterquadrate}
 
@@ -58,7 +65,7 @@ Für Sudokus mit 16 oder weniger Hinweisen existieren keine eindeutigen Lösunge
 
 \input{Sections/Erzeugung Lösung}
 
-
+\section{ab hier steht der nicht schöne von Basti und Sammy generierte Code}
 \subsection{Algorithmen}
 \subsubsection{Generierungsalgorithmen}
 
