@@ -1,31 +1,68 @@
 \subsection{Kommunikation per POST-Anfrage}
 
-Die Kommunikation zwischen Frontend und Backend erfolgt über POST-Anfragen. Das Frontend sendet dabei Daten im JSON-Format an einen definierten API-Endpunkt des Backends.
+Die Kommunikation zwischen Frontend und Backend erfolgt über \texttt{POST}-Anfragen. Das Frontend sendet dabei die benötigten Daten im JSON-Format an einen definierten API-Endpunkt des Backends (Port 8080).  
+Es werden zwei Modi unterschieden:
+\begin{enumerate}
+	\item \textbf{Generieren von Sudokus}
+	\item \textbf{Lösen von Sudokus}
+\end{enumerate}
 
-\subsection{Frontend-Seite}
+Im Generierungsmodus gilt folgende Zahlenrepräsentation:
+\begin{itemize}
+	\item \texttt{0} bedeutet: Zelle nicht markiert
+	\item \texttt{1} bedeutet: Zelle markiert, aber ohne festgelegte Zahl
+	\item \texttt{2--10} bedeutet: Zelle markiert mit der Zahl $(i-1)$ festgelegt
+\end{itemize}
 
-Das Frontend erstellt ein JSON-Objekt mit den benötigten Daten und schickt es per POST an das Backend. Beispiel mit JavaScript:
+Das Anfrageformat ist wie folgt strukturiert:
 
 \begin{verbatim}
-fetch('/api/endpoint', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ key: 'value' })
-})
-.then(response => response.json())
-.then(data => {
-  // Daten verarbeiten und UI aktualisieren
-});
+	struct Input {
+		data: Vec<usize>,
+		length: usize,
+		markingmode: bool,  
+	}
 \end{verbatim}
 
-\subsection{Backend-Seite}
+Dabei gilt:
+\begin{itemize}
+	\item \texttt{data} enthält die Sudoku-Daten gemäß der obigen Repräsentation und bildet ein Tupel der entsprechenden Größe (16, 36 oder 81).
+	\item \texttt{length} wiederholt der Übersicht halber die Länge der Daten.
+	\item \texttt{markingmode} legt die Repräsentationsart fest (\texttt{true} zum Generieren, \texttt{false} zum Lösen).
+\end{itemize}
 
-Das Backend empfängt die POST-Anfrage, liest die JSON-Daten aus, verarbeitet sie (z.B. Validierung, Datenbankzugriff) und sendet eine JSON-Antwort zurück.
+Das Backend verarbeitet die Anfrage und liefert eine Antwort im folgenden Format zurück:
 
-\subsection{Antwort}
+\begin{verbatim}
+	struct Output {
+		data: Vec<i32>,
+		solution: Vec<i32>,
+		hassolution: bool,
+	}
+\end{verbatim}
 
-Die Antwort enthält den Status der Verarbeitung und ggf. weitere Daten im JSON-Format. Das Frontend wertet diese aus und reagiert entsprechend (z.B. Anzeige von Erfolg oder Fehler).
+Die Repräsentation ist nun vereinfacht:
+\begin{itemize}
+	\item \texttt{0} steht für eine leere Zelle
+	\item \texttt{1-9} steht für eine belegte Zelle mit der jeweiligen Zahl
+\end{itemize}
 
-\subsection{Zusammenfassung}
+\texttt{data} enthält das vom Backend gelieferte (ggf. unvollständige) Sudoku.  
+\texttt{solution} stellt die vollständig ausgefüllte Lösung zum Vergleich bereit.  
+\texttt{hassolution} gibt an, ob für das Sudoku überhaupt eine gültige Lösung existiert.
 
-Die Kommunikation basiert auf dem Senden und Empfangen von JSON-Daten per POST-Anfrage. Das Frontend baut die Anfrage, das Backend verarbeitet sie und antwortet mit JSON. So findet der Datenaustausch konkret statt.
+
+\subsubsection{Frontend Code}
+Das Frontend erstellt aus den Nutzereingaben ein JSON-Objekt und sendet dieses per \texttt{POST}-Anfrage an das Backend. JavaScript Beispiel:
+
+\begin{verbatim}
+	fetch('/api/endpoint', {
+		method: 'POST',
+		headers: { 'Content-Type': 'application/json' },
+		body: JSON.stringify({ key: 'value' })
+	})
+	.then(response => response.json())
+	.then(data => {
+		// Daten verarbeiten und UI aktualisieren
+	});
+\end{verbatim}
