@@ -48,7 +48,7 @@ Um die Lösungsansätze miteinander vergleichen zu können, haben wir jeweils 10
 Hierfür haben wir einmal den cadical SAT-Solver~\cite{pysat} verwendet und außerdem die verschiedenen Solver einer CSP-Solver library~\cite{pycsp}.
 Wir haben einmal den Durchschnitt der Zeiten pro Solver für das reine Lösen ausgewertet und die Anzahl der abgelaufenen Durchläufe, also die Durchläufe die über eine Sekunde gedauert haben.
 
-    \begin{figure*}[t]
+    \begin{figure*}[h!]
         \centering
         
         \begin{subfigure}[b]{0.8\textwidth}
@@ -62,9 +62,10 @@ Wir haben einmal den Durchschnitt der Zeiten pro Solver für das reine Lösen au
         \end{subfigure}
         
         \caption{Comparison of times and timeouts for different solving Algorithms}
+        \label{fig:times_timeouts}
     \end{figure*}
 
-Wie man unschwer erkennen kann, ist der SAT-Solver mit Abstand am schnellsten und löst die Sudokus innerhalb von meist nicht messbarer Zeit. 
+Wie man unschwer in den Graphen~\ref{fig:times_timeouts} erkennen kann, ist der SAT-Solver mit Abstand am schnellsten und löst die Sudokus innerhalb von meist nicht messbarer Zeit. 
 Genau gleich sieht es mit den Timeouts aus, bei allen 100 Sudokus hat der SAT-Solver alle Lösungen gefunden. Viele der anderen Solver haben keine einzige Lösung in der gegebenen Zeit gefunden.
 Auch wenn sich manche CSP-Lösungsverfahren gut gehalten haben, macht es keinen Sinn etwas anderes als den getesteten SAT-Solver zu verwenden.
 Wir können mit ähnlicher Performanz rechnen, da auch cadical-rs so wie die Implementierung in Python auf ersichtlich schnellem Code in C/C++ laufen.
