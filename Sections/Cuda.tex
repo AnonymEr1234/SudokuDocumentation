@@ -1,0 +1,6 @@
+\subsection{Experiment mit CUDA}
+
+Aufgrund der stark parallelen Natur des Problems haben wir ebenfalls einen GPU-basierten Ansatz mithilfe von CUDA untersucht. Dabei wurden sowohl ein CSP- als auch ein SAT-Ansatz implementiert und getestet.  
+Für Sudokus mit vielen vorgegebenen Hinweisen erzielte die GPU-Lösung vergleichbare Ergebnisse zum CPU-basierten Lösen (Hardware: Nvidia RTX 1050ti vs. AMD Ryzen 7 2700X). Bei Sudokus mit wenigen Vorgaben hingegen schnitt der GPU-Ansatz schlechter ab als die CPU-Lösung.  
+
+Dies führen wir insbesondere auf das komplexe \emph{Branching} zurück, welches sich nur bedingt für GPUs eignet. Aufgrund des höheren Aufwands und der geringeren Effizienz haben wir uns letztlich trotz des interessanten Experiments für den CPU-basierten Ansatz entschieden, da dieser einfacher und performanter ist.
