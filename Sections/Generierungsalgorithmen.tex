@@ -1,0 +1,49 @@
+Um zu überprüfen ob ein Sudoku eindeutig ist, nutzen wir folgenden Algorithmus~\ref{alg:eindeutig}. 
+Wenn also durch die Anwendung des Grids auf die Lösungen ein eindeutig lösbares Sudoku entsteht können wir dieses dem Nutzer zurückgeben.
+Im Algorithmus~\ref{alg:generierung} wird dargestellt, wie wir hierbei vorgehen.
+
+\begin{algorithm}
+    \caption{Sudoku eindeutig lösbar}
+    \label{alg:eindeutig}
+    \begin{algorithmic}[1]
+        \Require $G$ ist ein leeres oder teilweise ausgefülltes $9 \times 9$ Sudoku-Gitter.
+        \Require $Solver$ ist eine SAT-Solver mit den entsprechenden Sudoku Klauseln.
+        \Ensure Es wird \textbf{true} und die Lösung zurück gegeben wenn das Sudoku eindeutig lösbar ist und \textbf{false} wenn nicht.
+        \Function{Eindeutig}{$G, Solver$}
+            \State Let $solvable, solution \gets \Call{Solver.solveSudoku}{G}$
+            \If{solvable}
+                \State $\Call{Solver.prohibitSolution}{solution}$
+                \State Let $unique, uniqueSolution \gets \Call{Solver.solveSudoku}{G}$
+                \State \Return (unique, $uniqueSolution$)
+            \Else
+                \State \Return \textbf{false}
+            \EndIf
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+    \caption{Sudoku Generierung}
+    \label{alg:generierung}
+    \begin{algorithmic}[1]
+        \Require $G$ ist ein Sudoku-Gitter mit Einsen an markierten und Nullen and unmarkierten Stellen.
+        \Require $M$ Menge an vollständigen Sudokus, die wir zur Generierung nutzen.
+        \Function{generateSudoku}{$G, M$}
+            \State Let $solver \gets \Call{Solver}{G.size}$
+            \For{$m \in M$}
+                \State Let $transformed \gets G \cdot m$ \Comment{Stellenweise Multiplikation}
+                \State Let $unique, solution \gets \Call{Eindeutig}{transformed, solver}$
+                \If{$unique$}
+                    \State \Return $solution$
+                \EndIf
+            \EndFor
+            
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
+
+Beim Generieren wurden zwei verschiedene Möglichkeiten verglichen, einmal die Generierung ohne und einmal mit Threads. 
+Das Generieren zu parallelisieren scheint sinnvoll, da es keine großen Abhängigkeiten voneinander gibt.
+Die Implementierung mit Threads ist im Grunde die gleiche wie ohne, nur, dass hier die Menge $M$ in die Anzahl von Threads viele disjunktive Teilmengen geteilt wird.
+Anschließend wird auf jeder Thread auf einer dieser Teilmengen gestartet. Sobald eine Lösung gefunden wird, werden die anderen Threads unterbrochen.

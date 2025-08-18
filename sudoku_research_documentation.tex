@@ -14,6 +14,7 @@
 \usepackage{enumerate}
 \usepackage{pythontex}
 \usepackage{lstmisc}
+\usepackage{subcaption}
 
 
 \usepackage{tikz}
@@ -68,46 +69,10 @@ Hinweise.
 \section{ab hier steht der nicht schöne von Basti und Sammy generierte Code}
 \subsection{Algorithmen}
 \subsubsection{Generierungsalgorithmen}
-
+\input{Sections/Generierungsalgorithmen.tex}
 
 \subsubsection{Lösungsalgorithmen}
-
-TODO in die Überschriften besser einteilen.
-
-Um zu überprüfen, ob bestimmte partielle Sudokus eindeutig lösbar ist, haben wir uns verschieden Lösungsmöglichkeiten überlegt.
-Die zwei wichtigsten Überlegungen waren einmal ein CSP-Solver (Constraint Satisfaction Problem) oder ein SAT-Solver (Satisfiability).
-Jeweils Ansätze je aus dem Bereich der künstlichen Intelligenz oder aus der theoretischen Informatik.
-Um herauszufinden, welche dieser Ansätze eine schnellere Lösung bietet haben wir ein python Skript geschrieben welches diesen Sachverhalt untersuchen sollte~\cite{TODO}.
-\begin{enumerate}
-    \item CSP-Solver \\
-    Um das Problem eines Sudokus in ein CSP zu übertragen haben wir schlicht die Domänen der Zellen auf die Werte $1, \dots, 9$ gesetzt und die Sudoku Regeln jeweils in Constraints übersetzt und anschließend die Domänen der schon vorgegebenen Zellen nur auf die eingegebenen Zahlen eingeschränkt.
-    Die Constraints waren also für jede Zelle $z_{i, k}$ einer Reihe, dass $z_{i, k} \neq z_{j, k}$ mit $j \neq i$.
-    Das Gleiche gilt für die Spalten, also $z_{i, k} \neq z_{i, l}$ mit $k \neq l$.
-    Für die Unterquadrate wurden jeweils die auch wieder geschaut, dass jede Zelle nicht den gleichen Wert haben darf wie eine andere im Unterquadrat.
-    \item SAT-Solver \\
-    Da der Sat-Solver nur für Variablen mit den Werten wahr oder falsch arbeiten kann.
-    Dafür wurde zuerst jeder Zelle mit jeden Wert eine bestimmte Variable zugewiesen.
-    \begin{verbatim}
-        varnum(r, c, d) = size * size * (r - 1) + size * (c - 1) + d
-    \end{verbatim}
-    TODO Mathematisches Aufschreiben
-    Ein SAT-Solver nimmt Clauses in konjunktiver Normalform entgegen.
-    Man musste also für jede Zelle bestimmen, dass mindestens eine Variable wahr ist.
-    Außerdem darf maximal eine Variable für jeden einzelnen Wert pro Zelle wahr sein.
-    Das musste auch für jede Spalte, jede Reihe und jedes Unterquadrat festgelegt werden.
-    Um die Hinweise hinzuzufügen, nimmt man also nun an, dass bestimmt Variablen wahr sind und löst dann mit dieser Annahme das SAT-Problem.
-\end{enumerate}
-
-Um die Lösungsansätze miteinander vergleichen zu können, haben wir jeweils 100 4x4, 6x6 und 9x9 sudokus lösen lassen.
-Hierfür haben wir einmal den cadical SAT-Solver~\cite{TODO} verwendet und dann noch die verschieden CSP-Solver von TODO~\cite{TODO}.
-Wir haben hierfür einmal den durchschnitt der Zeiten pro Solver für das reine lösen ausgewertet und die Anzahl der abgelaufenen Durchläufe.
-
-TODO add graphs
-TODO die graphen noch genauer beschreiben
-
-Wie man unschwer erkennen kann, ist der SAT-Solver mit Abstand am schnellsten und löst die Sudokus innerhalb von meist nicht messbarer Zeit.
-Auch wenn sich manche CSP-Lösungsverfahren gut gehalten haben, macht es keinen Sinn etwas anderes als den getesteten SAT-Solver zu verwenden.
-Wir können mit ähnlicher Performanz rechnen, da auch cadical-rs so wie die Implementierung in Python auf dem gleichen Code in C/C++ laufen.
+\input{Sections/Lösungsalgorithmen.tex}
 
 \subsection{Implementierung}
 \input{Sections/Communication}
