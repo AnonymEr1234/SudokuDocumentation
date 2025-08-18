@@ -46,21 +46,7 @@ Es werden folgende Forschungsziele behandelt:
 
 \section{Theoretische Überlegungen}
 
-\subsection{Problem Formulierung}
-
-\subsection{Minimale Anzahl Hinweise}
-Die minimale Anzahl für ein eindeutig lösbares $9 \times 9$ Sudoku sind 17 Hinweise~\cite{DBLP:journals/corr/abs-1201-0749}.
-Für $4 \times 4$ und $6 \times 6$ Sudokus haben wir alles Anordnungen an Hinweisen selbst getestet.
-Für $4 \times 4$ Sudokus sind es 4 Hinweise und für $6 \times 6$ Sudokus sind es %TODO
-Hinweise.
-%TODO jeweils ein Sudoku einfügen
-
-
-\input{Sections/Symmetrien}
-
-\input{Sections/RowConstraints}
-
-\input{Sections/Unterquadrate}
+\input{Sections/TheoretischeÜberlegungen.tex}
 
 \section{Erzeugung der partiellen Sudokus}
 
@@ -76,14 +62,11 @@ Hinweise.
 \subsubsection{Lösungsalgorithmen}
 \input{Sections/Lösungsalgorithmen.tex}
 
-\subsection{Implementierung}
+\section{Kommunikation}
 \input{Sections/Communication}
-\input{Sections/CUDA}
-\subsubsection{Tech-Stack}
 
+\section{Frontend}
 \input{Sections/Frontend}
-\subsubsection{Backend}
-\subsubsection{Interface}
 
 \section{Ergebnisse}
 
@@ -93,5 +76,7 @@ Hinweise.
 
 \bibliographystyle{plain}
 \bibliography{references}
+
+\input{Sections/Anhang.tex}
 
 \end{document}
