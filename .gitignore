@@ -6,6 +6,7 @@
 !*.bib
 !*.md
 !*.gitignore
+!*.png
 
 # Allow directories (so .tex and .bib files in subdirectories are tracked)
 !*/
