@@ -1,13 +1,92 @@
 \subsection{Minimale Anzahl Hinweise}
 Die minimale Anzahl für ein eindeutig lösbares $9 \times 9$ Sudoku sind 17 Hinweise~\cite{DBLP:journals/corr/abs-1201-0749}.
 Für $4 \times 4$ und $6 \times 6$ Sudokus haben wir alles Anordnungen an Hinweisen selbst getestet.
-Für $4 \times 4$ Sudokus sind es 4 Hinweise und für $6 \times 6$ Sudokus sind es %TODO
-Hinweise.
-%TODO jeweils ein Sudoku einfügen
+Für $4 \times 4$ Sudokus sind es 4 Hinweise und für $6 \times 6$ Sudokus sind es 8 Hinweise.
+Jeweils ein Beispiel für diese minimalen Sudokus lassen sich in \cref{fig:minimal_hinweise} finden.
+
+
+\begin{figure}[H]
+    \centering
+    \begin{minipage}{0.48\textwidth}
+        \begin{tikzpicture}
+            % Zellgröße
+            \def\s{0.8cm}
+
+            % 4x4 Sudoku (Beispiel-Lösung, anpassbar)
+            \def\sudoku{
+                    {4,3, , },
+                    { ,,,},
+                    {1,, 2, },
+                    { ,,,},
+            }
+
+            % Rasterlinien
+            \foreach \x in {0,1,...,4} {
+                \draw[thin] (\x*\s, 0) -- (\x*\s, 4*\s);
+                \draw[thin] (0, \x*\s) -- (4*\s, \x*\s);
+            }
+            \foreach \x in {0,2,4} {
+                \draw[very thick] (\x*\s, 0) -- (\x*\s, 4*\s);
+                \draw[very thick] (0, \x*\s) -- (4*\s, \x*\s);
+            }
+
+            % Zahlen eintragen
+            \foreach \row [count=\i from 0] in \sudoku {
+                \foreach \num [count=\j from 0] in \row {
+                    \node at (\j*\s + 0.5*\s, 3.5*\s - \i*\s) {\num};
+                }
+            }
+        \end{tikzpicture}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\textwidth}
+        \begin{tikzpicture}
+            % Zellgröße
+            \def\s{0.8cm}
+
+            % 6x6 Sudoku (Beispiel – anpassbar)
+            \def\sudoku{
+                    {4,6,,3,,},
+                    {5,,,,,},
+                    {3,,,,,},
+                    {,,,,5,},
+                    {,,1,2,,},
+                    {,,,,,},
+            }
+
+            % Rasterlinien
+            \foreach \x in {0,1,...,6} {
+                \draw[thin] (\x*\s, 0) -- (\x*\s, 6*\s);
+                \draw[thin] (0, \x*\s) -- (6*\s, \x*\s);
+            }
+            % Dicke Linien für 3-Spalten-Blöcke und 2-Zeilen-Blöcke
+            \foreach \x in {0,3,6} {
+                \draw[very thick] (\x*\s, 0) -- (\x*\s, 6*\s);
+            }
+            \foreach \y in {0,2,4,6} {
+                \draw[very thick] (0, \y*\s) -- (6*\s, \y*\s);
+            }
+
+            % Zahlen eintragen
+            \foreach \row [count=\i from 0] in \sudoku {
+                \foreach \num [count=\j from 0] in \row {
+                    \node at (\j*\s + 0.5*\s, 5.5*\s - \i*\s) {\num};
+                }
+            }
+        \end{tikzpicture}
+    \end{minipage}
+    \caption{Beispiele für minimale Sudokus}
+    \label{fig:minimal_hinweise}
+\end{figure}
+
+
+
+
 
 \subsection{Symmetrien}
-Ein Sudoku besteht aus 3 horizontalen und 3 vertikalen Bändern. Die Bänder bestehen jeweils aus 3 Zeilen beziehungsweise 3 Spalten. \\
-Die Tupel (1, 2, 3),(4, 5, 6),(7, 8, 9) beschreiben die Zeilen oder Spalten der jeweiligen Bänder. \\
+Ein 9x9 Sudoku besteht aus 3 horizontalen und 3 vertikalen Bändern.
+Die Bänder bestehen jeweils aus 3 Zeilen beziehungsweise 3 Spalten. \\
+Die Tupel (1, 2, 3), (4, 5, 6), (7, 8, 9) beschreiben die Zeilen oder Spalten der jeweiligen Bänder. \\
 Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formulieren~\cite{russell2006mathematics}: \\
 \begin{itemize}
     \item Permutation der 9 Ziffern
@@ -17,8 +96,10 @@ Mit dem Wissen über die Bänder können wir die Symmetrien eines Sudokus formul
     \item Permutation der Spalten innerhalb eines vertikalen Bandes
     \item Spiegelung und Rotation
 \end{itemize}
-Insgesamt gibt es in etwa 6,7 Trilliarden verschiedene valide Sudokus \cite{felgenhauer2006mathematics}. Unter Berücksichtigung der Symmetrien
-gibt es ungefähr 5,5 Milliarden verschiedene valide Sudokus\cite{russell2006mathematics}. \\
+Insgesamt gibt es in etwa 6,7 Trilliarden verschiedene valide Sudokus \cite{felgenhauer2006mathematics}.
+Unter Berücksichtigung der Symmetrien gibt es ungefähr 5,5 Milliarden verschiedene valide Sudokus\cite{russell2006mathematics}. \\
+Wir haben verschiedene Experimenter mit den Symmetrien durchgeführt, allerdings keine signifikanten Ergebnisse erzielt.
+Deswegen haben wir im finalen Backend nur die Permutation der Ziffern verwendet.
 
 \subsection{Anzahl Hinweise pro Band}
 
@@ -139,11 +220,11 @@ gibt es ungefähr 5,5 Milliarden verschiedene valide Sudokus\cite{russell2006mat
 \end{figure}
 
 In einem partiellen Sudoku darf es in einem horizontalen Band keine zwei Zeilen ohne Hinweise geben.
-In \cref{fig:row_constraints} kann man sehen das es ansonsten mehrere Lösungen gibt.
-Alle Hinweise bis auf zwei komplette Zeilen sind gegeben und es gibt trotzdem zwei Lösungen, welche man rechts sehen kann.
+In \cref{fig:row_constraints} kann man sehen, dass es ansonsten mehrere Lösungen gibt.
+Obwohl alle Hinweise bis auf zwei komplette Zeilen gegeben sind, gibt es trotzdem zwei mögliche Lösungen.
 Äquivalent dazu dürfen in einem vertikalen Band keine zwei Spalten ohne Hinweise sein.
 Übersetzt man dies auf allgemeine Sudoku-Größen,
-muss in einem Band der Breite beziehungsweise Höhe $n$ mindestens $n-1$ Spalten beziehungsweise Zeilen mit Hinweisen gegeben sein.
+muss in einem Band der Breite beziehungsweise Höhe $n$ mindestens $n-1$ Spalten beziehungsweise Zeilen mit mindestens einem Hinweis gegeben sein.
 
 \subsection{Unterquadrate}
 \label{sec:unterquadrate}
@@ -254,4 +335,5 @@ Je zwei Zellen sind dabei in der gleichen Spalte beziehungsweise in der gleichen
 Entweder beide Zeilen oder beide Spalten sind im gleichen Band.
 Durch die Anordnung der Zellen ist es möglich, ein weiteres gültiges Sudoku zu generieren, nur durch Permutieren der beiden Ziffern im Unterquadrat.
 Das bedeutet, dass ein partielles Sudoku, welches ein vollständiges Sudoku mit Unterquadrat als Lösung hat, nicht eindeutig lösbar ist,
-wenn in keinem der Zellen der Unterquadrats eine Ziffer vorgegeben ist.
+wenn in keinem der Zellen des Unterquadrats eine Ziffer vorgegeben ist.
+Diese Erkenntnis werden wir uns im Backend zu Nutze machen.

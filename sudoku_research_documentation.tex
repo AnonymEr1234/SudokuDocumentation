@@ -33,35 +33,47 @@
 \maketitle
 
 \begin{abstract}
+    Das vorliegende Projekt beschäftigt sich mit der automatischen Generierung, Lösung und Bewertung von partiellen Sudoku-Rätseln.
+    Ziel war es, ein System zu entwickeln, mit dem Sudokus erstellt werden können, deren Vorgaben bestimmte Muster oder Bilder bilden.
+    Dazu wurde ein Backend entworfen, das mithilfe von SAT-Solver-Techniken eindeutige Sudokus generiert und deren Schwierigkeitsgrad bewertet.
+    Ergänzend wurde ein webbasiertes Frontend implementiert, das die Erstellung, Eingabe und Validierung verschiedener Sudoku-Größen (4×4, 6×6, 9×9) unterstützt.
+    Die Arbeit zeigt, dass SAT-Solver den effizientesten Ansatz zur Lösung von Sudokus darstellen und
+    dass eine sorgfältige Vermeidung von Unterquadraten entscheidend für die Eindeutigkeit generierter Sudokus ist.
 \end{abstract}
 
-\section{Einführung}
-\subsection{Hintergrund}
+\section{Einleitung}
+\input{Sections/Einleitung}
 
-\subsection{Forschungsziele}
-Es werden folgende Forschungsziele behandelt:
-\begin{itemize}
-    \item  
-\end{itemize}
+
 
 \section{Theoretische Überlegungen}
+\label{sec:theoretische_ueberlegungen}
 
 \input{Sections/TheoretischeÜberlegungen.tex}
 
 \section{Backend}
+\label{sec:backend}
 \input{Sections/Backend.tex}
 
-\section{Kommunikation}
-\input{Sections/Communication}
-
 \section{Frontend}
+\label{sec:frontend}
 \input{Sections/Frontend}
 
-\section{Ergebnisse}
+\section{Kommunikation}
+\label{sec:kommunikation}
+\input{Sections/Communication}
 
-\section{Diskussion}
-
-\section{Fazit und Ausblick}
+\section*{Zusammenfassung}
+Im Projekt wurde ein System entwickelt, das partielle Sudokus automatisch erzeugt, überprüft und über ein grafisches Interface zugänglich macht.
+Die Motivation war es, Sudokus mit visuellen Mustern zu generieren, ähnlich wie in Rätselheften mit Bildmotiven.
+Theoretische Vorüberlegungen zu Minimalanzahlen von Hinweisen, Symmetrien und Unterquadraten legten die Grundlage.
+Im Backend wurden verschiedene Ansätze zur Befüllung getesteter Raster umgesetzt.
+Dabei erwies sich die Nutzung vollständig ausgefüllter Sudokus kombiniert mit SAT-Solvern als effizienteste Lösung zur Sicherstellung eindeutiger Ergebnisse.
+Eine Evaluation mit großen Datenmengen zeigte, dass Sudokus mit mindestens 24 Hinweisen zuverlässig eindeutig generiert werden können.
+Das Frontend wurde als Webanwendung realisiert und ermöglicht sowohl die Markierung von Mustern als auch die direkte Eingabe von Zahlen, wobei unterschiedliche Sudoku-Größen unterstützt werden.
+Die Kommunikation zwischen Frontend und Backend erfolgt über JSON-basierte POST-Anfragen.
+Insgesamt liefert das Projekt eine funktionsfähige Plattform zur Erzeugung und Analyse von Sudokus und bietet Potenzial für Erweiterungen,
+wie etwa die Einbindung weiterer Lösungsstrategien oder eine erweiterte Schwierigkeitsanalyse.
 
 \bibliographystyle{plain}
 \bibliography{references}
