@@ -211,6 +211,50 @@ Wenn es nicht möglich ist, muss man wieder bei Schritt~\ref{step:fill} anfangen
 
 
 \subsection{Schwierigkeit bewerten}
+\subsubsection{Heuristiken}
+Um abschätzen zu können wie schwierig eine Sudoku ist haben wir uns dazu entschieden die Sudokus automatisch zu bewerten.
+Es gibt logischerweise schon viele Arbeiten die zu diesem Thema veröffentlicht wurden, wie z.B.~\cite{Pelanek14}.
+Aus Zeit und ausmaßtechnischen Gründen haben wir uns dazu entschieden jedes Sudoku mit der schwersten Heuristik zu bewerten die für das Lösen notwendig ist.
+Wir haben diese verschiedenen Heuristiken implementiert:
+
+\begin{itemize}
+    \item \textbf{Hidden Single} \\
+    Wenn eine Kandidatenzahl nur noch in einer Zelle der Reihe, der Spalte oder des Untergitters ist, dann muss die Zahl dort platziert werden.
+    
+    \item \textbf{Naked Single} \\
+    Wenn in einer Zelle nur noch eine einzige Kandidatenzahl vorkommt, dann muss die Zahl dort platziert werden.
+
+    \item \textbf{Pointing Pair} \\
+    Wenn genau zwei Mal die gleiche Kandidatenzahl in einer Reihe und einem Untergitter oder in einer Spalte und in einem Untergitter ist, 
+dann können in dieser Reihe oder Spalte keine weiteren Kandidatan der Zahl mehr vorkommen.
+
+    \item \textbf{Claiming Pair} \\
+    Wenn alle Kandidaten einer Zahl in Reihe oder Spalte in dem gleichen Untergitter vorkommen, dann kann man die Kandidaten aus den restlichen Zellen des Untergitters entfernen.
+
+    \item \textbf{X-Wing} \\
+    Wenn Spalten in den gleichen Reihen jeweils den gleichen Zahlenkandidat haben, kann man ihn aus den restlichen Zellen der jeweiligen Spalten und Reihen entfernen.
+\end{itemize}
+
+Diese Heuristiken haben alle eine gewisse Schwierigkeit, die sie nah an die menschliche Schwierigkeit anpasst. 
+Wir haben uns an den Zahlen von Pel{\'{a}}nek orientiert~\cite{Pelanek14}.
+Diese Heuristiken werden also alle nacheinander auf ein Sudoku angewendet und es wird immer die schwierigste Heuristik gespeichert, 
+bis eine Lösung gefunden wird oder kein Fortschritt für eine Iteration erfolgt.
+
+\subsubsection{Implementierung}
+Der Pseudocode Algorithmus gibt an, wie wir die Heuristiken anwenden.
+
+\begin{algorithm}
+    \caption{Sudoku Bewertung}
+    \label{alg:schwierigkeit}
+    \begin{algorithmic}[1]
+        \Require $G$ ist ein partielles Sudoku in einem der Formate $4 \times 4, 6 \times 6$ oder $9\times 9$.
+        \Function{rateDifficulty}{$G$}
+            \For{}
+                \State $\Call{G.applyHiddenSingle}{}$
+            \EndFor
+        \EndFunction
+    \end{algorithmic}
+\end{algorithm}
 
 \subsection{Evaluation}
 \begin{table}[h!]
