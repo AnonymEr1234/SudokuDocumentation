@@ -38,6 +38,7 @@ Das Backend verarbeitet die Anfrage und liefert eine Antwort im folgenden Format
 		data: Vec<i32>,
 		solution: Vec<i32>,
 		hassolution: bool,
+		difficulty: f64,
 	}
 \end{verbatim}
 
@@ -47,9 +48,13 @@ Die Repräsentation ist nun vereinfacht:
 	\item \texttt{1-9} steht für eine belegte Zelle mit der jeweiligen Zahl
 \end{itemize}
 
-\texttt{data} enthält das vom Backend gelieferte (ggf. unvollständige) Sudoku.  
+\texttt{data} enthält das vom Backend gelieferte (ggf. unvollständige) Sudoku. 
+
 \texttt{solution} stellt die vollständig ausgefüllte Lösung zum Vergleich bereit.  
+
 \texttt{hassolution} gibt an, ob für das Sudoku überhaupt eine gültige Lösung existiert.
+
+\texttt{difficulty} gibt die Schwierigkeit des gelieferten Sudokus an.
 
 
 \subsubsection{Frontend Code}
